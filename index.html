@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ex Ante Fest — Чепеларе</title>
+<meta name="description" content="Програма, лектори, място и практическа информация за Ex Ante Fest в Чепеларе.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,500&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="#top" class="brand">Ex Ante Fest</a>
+    <ul class="nav-links">
+      <li><a href="#schedule">Програма</a></li>
+      <li><a href="#speakers">Лектори</a></li>
+      <li><a href="#booths">Щандове и работилници</a></li>
+      <li><a href="#venue">Място</a></li>
+      <li><a href="#partners">Партньори</a></li>
+      <li><a href="#stay">Настаняване</a></li>
+      <li><a href="#eat">Храна и кафе</a></li>
+      <li><a href="#archive">Архив</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="edition-banner" id="edition-banner" hidden>
+  <div class="wrap">
+    <span id="edition-banner-text"></span>
+    <button type="button" id="edition-banner-back">Към текущото издание</button>
+  </div>
+</div>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <p class="hero-eyebrow" id="hero-eyebrow">Икономически фестивал</p>
+    <h1>Ex Ante <em>Fest</em></h1>
+    <div class="hero-meta">
+      <span><strong id="hero-dates">—</strong></span>
+      <span id="hero-venue">—</span>
+      <span>Вход свободен</span>
+    </div>
+    <p class="hero-tag" id="hero-tagline">Три дни дискусии, лектори и музика в сърцето на Родопите.</p>
+  </div>
+  <svg class="ridge ridge-hero" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor" d="M0,60 L0,38 L80,20 L160,34 L240,10 L340,30 L420,16 L520,36 L610,22 L700,40 L800,18 L900,32 L1000,12 L1100,28 L1200,20 L1200,60 Z"/>
+  </svg>
+</header>
+
+<main>
+
+  <section id="schedule">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">01</span>
+        <h2>Програма</h2>
+      </div>
+      <div id="schedule-content"><p class="empty-state">Зареждане на програмата…</p></div>
+    </div>
+  </section>
+
+  <section id="speakers">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">02</span>
+        <h2>Лектори</h2>
+      </div>
+      <div class="speaker-grid" id="speakers-content"><p class="empty-state">Зареждане на лекторите…</p></div>
+    </div>
+  </section>
+
+  <section id="booths">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">03</span>
+        <h2>Щандове и работилници</h2>
+      </div>
+      <div class="card-grid" id="booths-content"><p class="empty-state">Зареждане…</p></div>
+    </div>
+  </section>
+
+  <section id="venue">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">04</span>
+        <h2>Място</h2>
+      </div>
+      <div class="venue-layout" id="venue-content"><p class="empty-state">Зареждане…</p></div>
+    </div>
+  </section>
+
+  <section id="partners">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">05</span>
+        <h2>Партньори</h2>
+      </div>
+      <div class="partner-grid" id="partners-content"><p class="empty-state">Зареждане…</p></div>
+    </div>
+  </section>
+
+  <section id="stay">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">06</span>
+        <h2>Настаняване</h2>
+      </div>
+      <div class="card-grid" id="stay-content"></div>
+    </div>
+  </section>
+
+  <section id="eat">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">07</span>
+        <h2>Храна и кафе</h2>
+      </div>
+      <div class="card-grid" id="eat-content"></div>
+    </div>
+  </section>
+
+  <section id="archive">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">08</span>
+        <h2>Минали издания</h2>
+      </div>
+      <p class="section-intro">Кликнете на издание, за да разгледате програмата, лекторите и мястото му.</p>
+      <ul class="archive-list" id="archive-content"></ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    Създатели: Георги Стоев, Александрина Стоева · Организатор: Фондация „Тракия Тех“ · с подкрепата на Община Чепеларе
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

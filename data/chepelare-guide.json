@@ -1,0 +1,106 @@
+{
+  "about": "Чепеларе е планински град в сърцето на Родопите, на около 20 минути от Пловдив–Смолян шосето. Извън дните на фестивала градът е познат с чист въздух, пешеходни маршрути и близост до Пампорово.",
+  "thingsToDo": [
+    {
+      "title": "Пампорово",
+      "description": "Планински курорт на около 10 минути с кабинков лифт и лятна пешеходна зона.",
+      "link": ""
+    },
+    {
+      "title": "Музей на СНЕЖНИЯ ЧОВЕК",
+      "description": "Тематичен музей в центъра на Чепеларе, интересен за деца и възрастни.",
+      "link": ""
+    },
+    {
+      "title": "Природна забележителност „里“ (примерен запис)",
+      "description": "Заместете с реална локация — пешеходна пътека, скален феномен или водопад в района.",
+      "link": ""
+    }
+  ],
+  "accommodation": [
+    {
+      "name": "Хотел Шоки",
+      "type": "Хотел",
+      "priceRange": "",
+      "distanceFromVenue": "",
+      "partner": true,
+      "link": "https://hotelshoky.com/",
+      "phone": "+359 887 444 004",
+      "mapLink": "https://www.google.com/maps/search/?api=1&query=%D1%85%D0%BE%D1%82%D0%B5%D0%BB%20%D0%A8%D0%BE%D0%BA%D0%B8%20%D0%A7%D0%B5%D0%BF%D0%B5%D0%BB%D0%B0%D1%80%D0%B5",
+      "notes": "Партньор на Ex Ante Fest. Ул. „24-ти май“ 70."
+    },
+    {
+      "name": "Хотел Мартин",
+      "type": "Хотел",
+      "priceRange": "",
+      "distanceFromVenue": "",
+      "partner": false,
+      "link": "",
+      "phone": "0888 553 967",
+      "mapLink": "https://www.google.com/maps?q=41.7214631,24.6810287",
+      "notes": "Ул. „Кирил Маджаров“ 23."
+    },
+    {
+      "name": "Хотел Савов",
+      "type": "Хотел",
+      "priceRange": "",
+      "distanceFromVenue": "",
+      "partner": false,
+      "link": "",
+      "phone": "+359 888 687 975",
+      "mapLink": "https://www.google.com/maps?q=41.7276502,24.6860745",
+      "notes": "Ул. „Васил Дечев“ 7."
+    }
+  ],
+  "food": [
+    {
+      "name": "Бургери „При Дани“",
+      "cuisine": "Бургери и скара",
+      "priceRange": "",
+      "location": "На място",
+      "link": "",
+      "phone": "",
+      "mapLink": "",
+      "notes": "На територията на фестивала — вижте секция „Място“ за картата."
+    },
+    {
+      "name": "Ресторант на Хотел Метеор",
+      "cuisine": "",
+      "priceRange": "",
+      "location": "В града",
+      "link": "",
+      "phone": "+359 3051 2102",
+      "mapLink": "https://www.google.com/maps/search/?api=1&query=%D1%85%D0%BE%D1%82%D0%B5%D0%BB%20%D0%9C%D0%B5%D1%82%D0%B5%D0%BE%D1%80%20%D0%A7%D0%B5%D0%BF%D0%B5%D0%BB%D0%B0%D1%80%D0%B5",
+      "notes": "Ул. „Васил Дечев“ 53."
+    },
+    {
+      "name": "Mary's Cake",
+      "cuisine": "Сладкарница",
+      "priceRange": "",
+      "location": "В града",
+      "link": "",
+      "mapLink": "https://www.google.com/maps/search/?api=1&query=Mary%27s%20cake%20%D0%A7%D0%B5%D0%BF%D0%B5%D0%BB%D0%B0%D1%80%D0%B5",
+      "notes": "Ул. „Васил Дечев“ 25."
+    },
+    {
+      "name": "Snack bar Vavilon",
+      "cuisine": "Кафе и лека храна",
+      "priceRange": "",
+      "location": "В града",
+      "link": "",
+      "phone": "",
+      "mapLink": "https://www.google.com/maps/search/?api=1&query=Bistro%20Vavilon%20Chepelare",
+      "notes": "До площад Олимпийски."
+    },
+    {
+      "name": "Bistro Central",
+      "cuisine": "Кафе",
+      "priceRange": "",
+      "location": "В града",
+      "link": "",
+      "phone": "",
+      "mapLink": "https://www.google.com/maps/search/?api=1&query=Bistro%20Central%20Chepelare",
+      "notes": "На площад Олимпийски."
+    }
+  ]
+}
