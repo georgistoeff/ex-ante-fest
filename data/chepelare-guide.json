@@ -99,8 +99,18 @@
       "location": "В града",
       "link": "",
       "phone": "",
-    "mapLink": "https://www.google.com/maps/search/?api=1&query=41.7255713,24.6858351",
-      "notes": "На площад Олимпийски."
+      "mapLink": "https://www.google.com/maps/search/?api=1&query=41.7255713,24.6858351",
+      "notes": "На площад „Олимпийски“."
+    },
+    {
+      "name": "Пекарната на ъгъла",
+      "cuisine": "Пекарна",
+      "priceRange": "",
+      "location": "В града",
+      "link": "",
+      "phone": "",
+      "mapLink": "https://www.google.com/maps/search/?api=1&query=%D1%83%D0%BB.%20%D0%92%D0%B0%D1%81%D0%B8%D0%BB%20%D0%94%D0%B5%D1%87%D0%B5%D0%B2%2029%2C%20%D0%A7%D0%B5%D0%BF%D0%B5%D0%BB%D0%B0%D1%80%D0%B5",
+      "notes": "Ул. „Васил Дечев“ 29. Работи само сутрин; затворено в неделя."
     }
   ]
 }
