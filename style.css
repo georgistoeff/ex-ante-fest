@@ -324,6 +324,19 @@ h2 {
 }
 .partner-card p.partner-notes { font-size: 13px; color: var(--muted); margin: 4px 0 0; }
 
+/* ---------- Podcast ---------- */
+.podcast-embed {
+  margin-top: 8px;
+  max-width: 660px;
+}
+.podcast-embed iframe {
+  width: 100%;
+  border: none;
+}
+.podcast-links {
+  margin-top: 14px;
+}
+
 /* ---------- Guide cards (things to do / stay / eat) ---------- */
 .card-grid {
   display: grid;
