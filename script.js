@@ -255,6 +255,12 @@ function renderGallery(photos, year) {
   if (section) section.hidden = false;
   if (navItem) navItem.hidden = false;
 
+  // The section starts hidden, so a direct link to #gallery lands before we
+  // know whether there are photos. Once we reveal it, honor the hash manually.
+  if (window.location.hash === "#gallery" && section) {
+    section.scrollIntoView({ block: "start" });
+  }
+
   photos.forEach((photo, i) => {
     const fig = el("button", "gallery-thumb");
     fig.type = "button";
