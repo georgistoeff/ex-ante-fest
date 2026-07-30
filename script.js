@@ -173,7 +173,7 @@ function renderBooths(booths) {
   const container = document.getElementById("booths-content");
   container.innerHTML = "";
   if (!booths || !booths.length) {
-    container.appendChild(el("p", "empty-state", "Щандовете и работилниците предстои да бъдат обявени."));
+    container.appendChild(el("p", "empty-state", "Няма обявени щандове и работилници за това издание."));
     return;
   }
   booths.forEach(b => {

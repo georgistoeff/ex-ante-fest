@@ -144,7 +144,10 @@ a:focus-visible, button:focus-visible, select:focus-visible {
 }
 
 /* ---------- Sections ---------- */
-section { padding: 52px 0; }
+section {
+  padding: 52px 0;
+  scroll-margin-top: 84px;
+}
 section + section { border-top: none; }
 
 .section-head {
