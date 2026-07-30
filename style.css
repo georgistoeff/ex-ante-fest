@@ -238,6 +238,20 @@ h2 {
 }
 .event-description a:hover { opacity: 0.8; }
 
+.event-toggle--audio {
+  color: var(--pine);
+  margin-top: 6px;
+}
+.event-audio {
+  margin-top: 8px;
+  border-left: 2px solid var(--line);
+  padding-left: 12px;
+}
+.event-audio iframe {
+  display: block;
+  border-radius: 4px;
+}
+
 /* ---------- Speakers ---------- */
 .speaker-grid {
   display: grid;

@@ -23,19 +23,26 @@ function renderHero(editions, year) {
   document.getElementById("hero-eyebrow").textContent = entry
     ? `${entry.label} · Икономически фестивал`
     : "Икономически фестивал";
+  const taglineEl = document.getElementById("hero-tagline");
   if (entry && entry.tagline) {
-    document.getElementById("hero-tagline").textContent =
+    taglineEl.textContent =
       `Тема на изданието: ${entry.tagline}. Три дни дискусии, лектори и музика в сърцето на Родопите.`;
+  } else {
+    taglineEl.textContent = "Три дни дискусии, лектори и музика в сърцето на Родопите.";
   }
 }
 
 function renderSchedule(days) {
   const container = document.getElementById("schedule-content");
+  const audioNote = document.getElementById("schedule-audio-note");
   container.innerHTML = "";
   if (!days || !days.length) {
     container.appendChild(el("p", "empty-state", "Програмата предстои да бъде обявена."));
+    if (audioNote) audioNote.hidden = true;
     return;
   }
+  const hasAudio = days.some(day => (day.events || []).some(ev => ev.audio && ev.audio.trim()));
+  if (audioNote) audioNote.hidden = !hasAudio;
   days.forEach(day => {
     const block = el("div", "day-block");
     block.appendChild(el("div", "day-label", day.label || day.date));
@@ -68,6 +75,36 @@ function renderSchedule(days) {
         body.appendChild(desc);
       }
 
+      if (ev.audio && ev.audio.trim()) {
+        const audioId = `audio-${Math.random().toString(36).slice(2, 9)}`;
+        const audioToggle = el("button", "event-toggle event-toggle--audio", "🎧 Слушай записа ▾");
+        audioToggle.type = "button";
+        audioToggle.setAttribute("aria-expanded", "false");
+        audioToggle.setAttribute("aria-controls", audioId);
+
+        const audioWrap = el("div", "event-audio");
+        audioWrap.id = audioId;
+        audioWrap.hidden = true;
+        const iframe = document.createElement("iframe");
+        iframe.src = `https://archive.org/embed/${ev.audio.trim()}`;
+        iframe.width = "100%";
+        iframe.height = "60";
+        iframe.frameBorder = "0";
+        iframe.loading = "lazy";
+        iframe.title = `Запис — ${ev.title || "панел"}`;
+        audioWrap.appendChild(iframe);
+
+        audioToggle.addEventListener("click", () => {
+          const isOpen = audioToggle.getAttribute("aria-expanded") === "true";
+          audioToggle.setAttribute("aria-expanded", String(!isOpen));
+          audioToggle.textContent = isOpen ? "🎧 Слушай записа ▾" : "🎧 Скрий записа ▴";
+          audioWrap.hidden = isOpen;
+        });
+
+        body.appendChild(audioToggle);
+        body.appendChild(audioWrap);
+      }
+
       row.appendChild(body);
       block.appendChild(row);
     });
@@ -88,6 +125,17 @@ function renderSpeakers(speakers) {
     if (sp.role) card.appendChild(el("p", "speaker-role", sp.role));
     if (sp.bio) card.appendChild(el("p", "speaker-bio", sp.bio));
     if (sp.program) card.appendChild(el("p", "speaker-program", `Сесия: ${sp.program}`));
+    if (sp.links && sp.links.length) {
+      const links = el("div", "info-links");
+      sp.links.forEach(l => {
+        const a = el("a", null, l.label);
+        a.href = l.url;
+        a.target = "_blank";
+        a.rel = "noopener";
+        links.appendChild(a);
+      });
+      card.appendChild(links);
+    }
     container.appendChild(card);
   });
 }
@@ -233,89 +281,6 @@ function renderGuide(guide) {
   });
 }
 
-// ---------- Gallery ----------
-
-let galleryState = { photos: [], index: 0, year: null };
-
-function renderGallery(photos, year) {
-  galleryState = { photos: photos || [], index: 0, year };
-  const section = document.getElementById("gallery");
-  const navItem = document.getElementById("nav-gallery-item");
-  const container = document.getElementById("gallery-content");
-  container.innerHTML = "";
-
-  // Gallery only makes sense once an edition has happened — for an upcoming
-  // edition with no photos yet, hide the section and its nav link entirely
-  // rather than showing an empty placeholder.
-  if (!photos || !photos.length) {
-    if (section) section.hidden = true;
-    if (navItem) navItem.hidden = true;
-    return;
-  }
-  if (section) section.hidden = false;
-  if (navItem) navItem.hidden = false;
-
-  // The section starts hidden, so a direct link to #gallery lands before we
-  // know whether there are photos. Once we reveal it, honor the hash manually.
-  if (window.location.hash === "#gallery" && section) {
-    section.scrollIntoView({ block: "start" });
-  }
-
-  photos.forEach((photo, i) => {
-    const fig = el("button", "gallery-thumb");
-    fig.type = "button";
-    fig.setAttribute("aria-label", photo.caption || `Снимка ${i + 1}`);
-    const img = document.createElement("img");
-    img.src = `assets/${year}-gallery/${photo.file}`;
-    img.alt = photo.caption || "";
-    img.loading = "lazy";
-    fig.appendChild(img);
-    fig.addEventListener("click", () => openLightbox(i));
-    container.appendChild(fig);
-  });
-}
-
-function openLightbox(index) {
-  const { photos, year } = galleryState;
-  if (!photos.length) return;
-  galleryState.index = index;
-  const photo = photos[index];
-  const lightbox = document.getElementById("lightbox");
-  const captionEl = document.getElementById("lightbox-caption");
-  document.getElementById("lightbox-img").src = `assets/${year}-gallery/${photo.file}`;
-  document.getElementById("lightbox-img").alt = photo.caption || "";
-  captionEl.textContent = photo.caption || "";
-  captionEl.hidden = !photo.caption;
-  lightbox.hidden = false;
-}
-
-function closeLightbox() {
-  document.getElementById("lightbox").hidden = true;
-}
-
-function stepLightbox(delta) {
-  const { photos, index } = galleryState;
-  if (!photos.length) return;
-  const next = (index + delta + photos.length) % photos.length;
-  openLightbox(next);
-}
-
-function initLightbox() {
-  document.getElementById("lightbox-close").addEventListener("click", closeLightbox);
-  document.getElementById("lightbox-prev").addEventListener("click", () => stepLightbox(-1));
-  document.getElementById("lightbox-next").addEventListener("click", () => stepLightbox(1));
-  document.getElementById("lightbox").addEventListener("click", (e) => {
-    if (e.target.id === "lightbox") closeLightbox();
-  });
-  document.addEventListener("keydown", (e) => {
-    const lightbox = document.getElementById("lightbox");
-    if (lightbox.hidden) return;
-    if (e.key === "Escape") closeLightbox();
-    if (e.key === "ArrowLeft") stepLightbox(-1);
-    if (e.key === "ArrowRight") stepLightbox(1);
-  });
-}
-
 function renderArchive(editions, activeYear, onSelect) {
   const list = document.getElementById("archive-content");
   list.innerHTML = "";
@@ -381,15 +346,6 @@ async function loadYear(editions, year) {
     document.getElementById("partners-content").innerHTML = "";
     document.getElementById("booths-content").innerHTML = "";
   }
-
-  // Gallery loads independently — a missing/empty gallery.json for a given
-  // year shouldn't break the rest of the page.
-  try {
-    const photos = await getJSON(`data/${year}/gallery.json`);
-    renderGallery(photos, year);
-  } catch (err) {
-    renderGallery([], year);
-  }
 }
 
 async function switchYear(editions, year) {
@@ -406,7 +362,6 @@ async function init() {
     ]);
     renderGuide(guide);
     renderArchive(editions, editions.current, (y) => switchYear(editions, y));
-    initLightbox();
 
     const backBtn = document.getElementById("edition-banner-back");
     if (backBtn) {
@@ -414,6 +369,16 @@ async function init() {
     }
 
     await loadYear(editions, editions.current);
+
+    // Re-scroll to the URL hash now that all async content has rendered —
+    // otherwise the target section may have shifted position while everything
+    // above it was still showing "Зареждане…" placeholders.
+    if (window.location.hash) {
+      const target = document.querySelector(window.location.hash);
+      if (target) {
+        requestAnimationFrame(() => target.scrollIntoView({ behavior: "instant", block: "start" }));
+      }
+    }
   } catch (err) {
     console.error("Failed to initialize widget:", err);
   }
