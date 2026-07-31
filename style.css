@@ -410,6 +410,19 @@ h2 {
   margin-left: 6px;
 }
 
+/* ---------- Podcast ---------- */
+.podcast-embed {
+  margin-top: 8px;
+  max-width: 660px;
+}
+.podcast-embed iframe {
+  width: 100%;
+  border: none;
+}
+.podcast-links {
+  margin-top: 14px;
+}
+
 /* ---------- Gallery ---------- */
 .gallery-grid {
   display: grid;
