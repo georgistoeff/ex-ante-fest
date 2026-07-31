@@ -55,24 +55,6 @@ function renderSchedule(days) {
       body.appendChild(el("p", "event-title", ev.title || ""));
       if (ev.speaker) body.appendChild(el("p", "event-speaker", ev.speaker));
 
-      if (ev.type !== "break" && ev.title && ev.title.trim()) {
-        const shareBtn = el("button", "event-toggle event-toggle--share", "🔗 Копирай линк");
-        shareBtn.type = "button";
-        shareBtn.addEventListener("click", () => {
-          const url = `${location.origin}${location.pathname}#${eventId}`;
-          const done = () => {
-            shareBtn.textContent = "✓ Копирано";
-            setTimeout(() => { shareBtn.textContent = "🔗 Копирай линк"; }, 2000);
-          };
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(url).then(done).catch(() => window.prompt("Копирай линка:", url));
-          } else {
-            window.prompt("Копирай линка:", url);
-          }
-        });
-        body.appendChild(shareBtn);
-      }
-
       if (ev.description && ev.description.trim()) {
         const descId = `desc-${Math.random().toString(36).slice(2, 9)}`;
         const toggle = el("button", "event-toggle", "Прочети повече ▾");
@@ -123,6 +105,22 @@ function renderSchedule(days) {
 
         body.appendChild(audioToggle);
         body.appendChild(audioWrap);
+
+        const shareBtn = el("button", "event-toggle event-toggle--share", "🔗 Сподели записа");
+        shareBtn.type = "button";
+        shareBtn.addEventListener("click", () => {
+          const url = `${location.origin}${location.pathname}#${eventId}`;
+          const done = () => {
+            shareBtn.textContent = "✓ Копирано";
+            setTimeout(() => { shareBtn.textContent = "🔗 Сподели записа"; }, 2000);
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(done).catch(() => window.prompt("Копирай линка:", url));
+          } else {
+            window.prompt("Копирай линка:", url);
+          }
+        });
+        body.appendChild(shareBtn);
       }
 
       row.appendChild(body);
