@@ -471,15 +471,29 @@ async function init() {
       getJSON("data/chepelare-guide.json"),
     ]);
     renderGuide(guide);
-    renderArchive(editions, editions.current, (y) => switchYear(editions, y));
     initLightbox();
+
+    // A direct link to a panel (#event-2025-08-16-1700) may point at a past
+    // edition — extract the year from the hash so we load that edition's
+    // data instead of always defaulting to the current one.
+    let startYear = editions.current;
+    const eventMatch = window.location.hash.match(/^#event-(\d{4})-/);
+    if (eventMatch) {
+      const linkedYear = parseInt(eventMatch[1], 10);
+      if (editions.years.some(y => y.year === linkedYear)) {
+        startYear = linkedYear;
+      }
+    }
+
+    renderArchive(editions, startYear, (y) => switchYear(editions, y));
+    updateEditionBanner(editions, startYear);
 
     const backBtn = document.getElementById("edition-banner-back");
     if (backBtn) {
       backBtn.addEventListener("click", () => switchYear(editions, editions.current));
     }
 
-    await loadYear(editions, editions.current);
+    await loadYear(editions, startYear);
 
     // Re-scroll to the URL hash now that all async content has rendered —
     // otherwise the target section may have shifted position while everything
