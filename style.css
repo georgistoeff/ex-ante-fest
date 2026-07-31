@@ -192,6 +192,7 @@ h2 {
   gap: 16px;
   padding: 12px 0;
   border-bottom: 1px dashed var(--line);
+  scroll-margin-top: 84px;
 }
 .event-row:last-child { border-bottom: none; }
 .event-row--break {
@@ -243,6 +244,10 @@ h2 {
 
 .event-toggle--audio {
   color: var(--pine);
+  margin-top: 6px;
+}
+.event-toggle--share {
+  color: var(--slate);
   margin-top: 6px;
 }
 .event-audio {

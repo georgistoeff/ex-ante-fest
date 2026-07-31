@@ -48,10 +48,30 @@ function renderSchedule(days) {
     block.appendChild(el("div", "day-label", day.label || day.date));
     (day.events || []).forEach(ev => {
       const row = el("div", ev.type === "break" ? "event-row event-row--break" : "event-row");
+      const eventId = `event-${day.date}-${(ev.time || "").replace(":", "")}`;
+      row.id = eventId;
       row.appendChild(el("div", "event-time", ev.time && ev.time.trim() ? ev.time : "TBD"));
       const body = el("div");
       body.appendChild(el("p", "event-title", ev.title || ""));
       if (ev.speaker) body.appendChild(el("p", "event-speaker", ev.speaker));
+
+      if (ev.type !== "break" && ev.title && ev.title.trim()) {
+        const shareBtn = el("button", "event-toggle event-toggle--share", "🔗 Копирай линк");
+        shareBtn.type = "button";
+        shareBtn.addEventListener("click", () => {
+          const url = `${location.origin}${location.pathname}#${eventId}`;
+          const done = () => {
+            shareBtn.textContent = "✓ Копирано";
+            setTimeout(() => { shareBtn.textContent = "🔗 Копирай линк"; }, 2000);
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(done).catch(() => window.prompt("Копирай линка:", url));
+          } else {
+            window.prompt("Копирай линка:", url);
+          }
+        });
+        body.appendChild(shareBtn);
+      }
 
       if (ev.description && ev.description.trim()) {
         const descId = `desc-${Math.random().toString(36).slice(2, 9)}`;
@@ -469,7 +489,14 @@ async function init() {
     if (window.location.hash) {
       const target = document.querySelector(window.location.hash);
       if (target) {
-        requestAnimationFrame(() => target.scrollIntoView({ behavior: "instant", block: "start" }));
+        requestAnimationFrame(() => {
+          target.scrollIntoView({ behavior: "instant", block: "start" });
+          // Direct link to a panel: auto-expand its description/audio player
+          // so the person doesn't have to click through to see what was shared.
+          target.querySelectorAll(".event-toggle").forEach(btn => {
+            if (btn.getAttribute("aria-expanded") === "false") btn.click();
+          });
+        });
       }
     }
   } catch (err) {
