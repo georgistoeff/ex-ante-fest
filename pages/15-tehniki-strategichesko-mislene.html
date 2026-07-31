@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ex Ante — 15 техники за стратегическо мислене</title>
+<meta name="description" content="15 техники за стратегическо мислене в несигурен свят — от подкаста Ex Ante с Георги Стоев.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple-950:#180330;
+    --purple-900:#2A0A4C;
+    --purple-800:#3A1466;
+    --lavender-400:#B6A2E8;
+    --lavender-200:#E4DBFB;
+    --yellow-400:#F5D142;
+    --yellow-300:#FBE28A;
+    --paper:#FAF8FC;
+    --ink:#1C0E30;
+    --muted:#6E6280;
+    --line: rgba(28,14,48,0.10);
+    --maxw: 920px;
+    --pad: clamp(24px, 6vw, 72px);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Manrope', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3, .eyebrow, .tech-num{ font-family:'Unbounded', sans-serif; }
+
+  a{color:inherit;}
+
+  img,svg{display:block; max-width:100%;}
+
+  /* ---------- progress bar (mobile + global) ---------- */
+  .progress-bar{
+    position:fixed; top:0; left:0; height:4px; width:0%;
+    background:linear-gradient(90deg, var(--yellow-400), var(--lavender-400));
+    z-index:60; transition:width .1s linear;
+  }
+
+  /* ---------- side rail (desktop) ---------- */
+  .rail{
+    position:fixed; right:22px; top:50%; transform:translateY(-50%);
+    display:flex; flex-direction:column; gap:9px; z-index:50;
+  }
+  .rail button{
+    width:9px; height:9px; border-radius:50%; border:none; padding:0;
+    background:rgba(28,14,48,0.18); cursor:pointer; position:relative;
+  }
+  .rail button.active{ background:var(--purple-900); transform:scale(1.35); }
+  .rail button::after{
+    content:attr(data-n);
+    position:absolute; right:18px; top:50%; transform:translateY(-50%);
+    font-family:'Unbounded', sans-serif; font-size:11px; color:var(--purple-900);
+    background:var(--paper); padding:3px 8px; border-radius:6px;
+    opacity:0; pointer-events:none; transition:opacity .15s ease;
+    white-space:nowrap; box-shadow:0 4px 14px rgba(28,14,48,0.15);
+  }
+  .rail button:hover::after{ opacity:1; }
+  @media (max-width: 900px){ .rail{ display:none; } }
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100svh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    background:
+      radial-gradient(60% 55% at 18% 12%, rgba(182,162,232,0.28), transparent 60%),
+      radial-gradient(50% 50% at 85% 88%, rgba(245,209,66,0.16), transparent 60%),
+      linear-gradient(160deg, var(--purple-950), var(--purple-900) 65%);
+    color:var(--paper);
+    padding:120px var(--pad) 90px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:""; position:absolute; inset:0;
+    background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 22px 22px;
+    opacity:.5; pointer-events:none;
+  }
+  .hero-eyebrow{
+    font-size:12px; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--lavender-400); margin-bottom:22px; z-index:1;
+  }
+  .hero-wordmark{
+    display:flex; flex-wrap:wrap; gap:.06em; justify-content:center;
+    font-weight:900; line-height:.92; letter-spacing:-0.01em;
+    font-size:clamp(56px, 13vw, 132px); z-index:1;
+  }
+  .hero-wordmark .ex{ color:var(--yellow-400); }
+  .hero-wordmark .ante{ -webkit-text-stroke:2px var(--paper); color:transparent; }
+  @media (max-width:520px){ .hero-wordmark .ante{ -webkit-text-stroke:1.4px var(--paper); } }
+
+  .hero-title{
+    margin:34px 0 0; z-index:1;
+    font-family:'Manrope', sans-serif; font-weight:800;
+    font-size:clamp(22px, 3.6vw, 34px);
+    max-width:16ch; color:var(--paper);
+  }
+  .hero-title .accent{ color:var(--lavender-400); }
+  .hero-sub{
+    margin:20px 0 0; max-width:52ch; color:var(--lavender-200);
+    font-size:clamp(15px,2vw,18px); z-index:1;
+  }
+  .hero-cta{
+    margin-top:44px; display:flex; gap:14px; flex-wrap:wrap; justify-content:center; z-index:1;
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 24px; border-radius:999px; font-weight:700; font-size:14.5px;
+    text-decoration:none; border:1.5px solid transparent; cursor:pointer;
+  }
+  .btn-solid{ background:var(--yellow-400); color:var(--purple-950); }
+  .btn-solid:hover{ background:var(--yellow-300); }
+  .btn-ghost{ border-color:rgba(250,248,252,0.35); color:var(--paper); }
+  .btn-ghost:hover{ border-color:var(--paper); }
+
+  .scroll-cue{
+    margin-top:56px; width:22px; height:36px; border:2px solid rgba(250,248,252,0.5);
+    border-radius:14px; position:relative; z-index:1;
+  }
+  .scroll-cue::before{
+    content:""; position:absolute; top:6px; left:50%; width:4px; height:8px;
+    background:var(--yellow-400); border-radius:2px; transform:translateX(-50%);
+    animation:cue 1.8s ease infinite;
+  }
+  @keyframes cue{ 0%{ opacity:1; top:6px;} 70%{opacity:0; top:18px;} 100%{opacity:0; top:6px;} }
+
+  /* ---------- intro ---------- */
+  .intro{
+    max-width:var(--maxw); margin:0 auto; padding:96px var(--pad) 40px;
+  }
+  .intro p{
+    font-size:clamp(17px,2vw,20px); color:var(--muted); margin:0 0 20px;
+  }
+  .intro p:first-child{ color:var(--ink); font-weight:600; }
+  .intro .sign{
+    margin-top:36px; font-family:'Unbounded', sans-serif; font-size:13px;
+    color:var(--purple-900); letter-spacing:.04em;
+  }
+  .rule{
+    max-width:var(--maxw); margin:56px auto; height:1px; background:var(--line);
+  }
+
+  /* ---------- technique sections ---------- */
+  .tech{
+    max-width:var(--maxw); margin:0 auto; padding:64px var(--pad);
+    display:grid; grid-template-columns:auto 1fr; gap:26px 28px; align-items:start;
+    opacity:0; transform:translateY(24px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .tech.is-visible{ opacity:1; transform:translateY(0); }
+
+  .tech-num{
+    font-weight:800; color:var(--purple-900); flex:none;
+    font-size:clamp(40px,6vw,64px); line-height:1; letter-spacing:-0.01em;
+  }
+
+
+  .tech-body{ padding-top:4px; }
+  .tech h2{
+    margin:0 0 14px; font-family:'Manrope',sans-serif; font-weight:800;
+    font-size:clamp(21px,2.6vw,28px); line-height:1.28; color:var(--ink);
+  }
+  .tech h2 .hl{ color:var(--purple-800); }
+  .tech p{ margin:0; color:var(--muted); font-size:clamp(15.5px,1.8vw,17px); max-width:56ch; }
+  .tech .diagram{ margin-top:26px; }
+  .tech .diagram svg{ width:100%; max-width:360px; height:auto; }
+
+  @media (max-width:600px){
+    .tech{ grid-template-columns:1fr; }
+    .tech-num{ margin-bottom:2px; }
+  }
+
+  /* ---------- quote band ---------- */
+  .quote-band{
+    background:linear-gradient(160deg, var(--purple-950), var(--purple-900) 70%);
+    color:var(--paper); padding:64px var(--pad);
+    position:relative; overflow:hidden;
+  }
+  .quote-band::before{
+    content:"“"; position:absolute; top:-40px; left:clamp(10px,4vw,40px);
+    font-family:'Unbounded',sans-serif; font-size:220px; color:rgba(245,209,66,0.14);
+    line-height:1; pointer-events:none;
+  }
+  .quote-inner{ max-width:var(--maxw); margin:0 auto; position:relative; z-index:1; }
+  .quote-inner blockquote{
+    margin:0; font-family:'Manrope',sans-serif; font-style:italic; font-weight:600;
+    font-size:clamp(21px,3vw,30px); line-height:1.4; max-width:22ch; color:var(--paper);
+  }
+  .quote-inner cite{
+    display:block; margin-top:22px; font-family:'Unbounded',sans-serif; font-style:normal;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--lavender-400);
+  }
+
+  /* ---------- footer ---------- */
+  .footer{
+    display:grid; grid-template-columns:1fr 1fr;
+  }
+  @media (max-width:640px){ .footer{ grid-template-columns:1fr; } }
+  .footer-panel{
+    padding:70px var(--pad); display:flex; flex-direction:column; justify-content:center;
+  }
+  .footer-panel.yellow{ background:var(--yellow-400); color:var(--purple-950); }
+  .footer-panel.purple{ background:var(--purple-950); color:var(--paper); }
+  .footer-mark{
+    font-weight:900; font-size:clamp(46px,7vw,84px); line-height:.9; margin:0 0 14px;
+  }
+  .footer-label{
+    font-family:'Unbounded',sans-serif; font-size:12px; letter-spacing:.1em; text-transform:uppercase;
+    opacity:.8;
+  }
+
+  .listen{
+    padding:70px var(--pad) 90px; text-align:center; background:var(--paper);
+  }
+  .listen h3{
+    margin:0 0 10px; font-size:clamp(20px,2.6vw,26px); font-weight:800;
+  }
+  .listen p{ margin:0 0 32px; color:var(--muted); }
+  .platforms{
+    display:flex; flex-wrap:wrap; gap:12px; justify-content:center; max-width:640px; margin:0 auto;
+  }
+  .platform{
+    padding:12px 20px; border-radius:999px; border:1.5px solid var(--line);
+    font-weight:700; font-size:14px; text-decoration:none; color:var(--ink);
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .platform:hover{ border-color:var(--purple-900); background:var(--lavender-200); }
+
+  .credits{
+    text-align:center; padding:26px var(--pad) 40px; font-size:12.5px; color:var(--muted);
+    background:var(--paper);
+  }
+  .back-link{
+    position:fixed; top:20px; left:20px; z-index:60;
+    font-family:'Unbounded', sans-serif; font-size:11px; letter-spacing:.04em;
+    color:var(--lavender-200); text-decoration:none;
+    background:rgba(24,3,48,0.35); backdrop-filter:blur(6px);
+    padding:8px 14px; border-radius:999px; border:1px solid rgba(250,248,252,0.2);
+  }
+  .back-link:hover{ border-color:var(--paper); color:var(--paper); }
+</style>
+</head>
+<body>
+
+<a class="back-link" href="../index.html#archive">← Ex Ante Fest</a>
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="rail" id="rail" aria-label="Прогрес по техники">
+  <!-- generated by JS -->
+</nav>
+
+<header class="hero">
+  <div class="hero-eyebrow">Подкаст за икономическо мислене</div>
+  <div class="hero-wordmark"><span class="ex">EX</span><span class="ante">ANTE</span></div>
+  <p class="hero-title">15 техники за <span class="accent">стратегическо мислене</span> в несигурен свят</p>
+  <p class="hero-sub">Идеи от три сезона на подкаста Ex Ante — основа за по-уверени решения, не готова формула за успех.</p>
+  <div class="hero-cta">
+    <a class="btn btn-solid" href="#tech-1">Прочети техниките ↓</a>
+    <a class="btn btn-ghost" href="#listen">Слушай подкаста</a>
+  </div>
+  <div class="scroll-cue"></div>
+</header>
+
+<section class="intro">
+  <p>Подкастът Ex Ante се роди през есента на 2022 г. Идеята беше да разкаже как мисли един икономист и да насърчи слушателите към стратегическо мислене. До сега са записани общо 36 епизода, разделени по равно в три сезона.</p>
+  <p>Тук са резюмирани някои от техниките за стратегическо мислене, обсъждани през тези три сезона. Ще откриете идеи и концепции, които да ви дадат основа за уверени решения.</p>
+  <p>Но нищо тук не дава готова формула за успех — и не би следвало да вярвате на хора, които предлагат такава.</p>
+  <p>Поздравления, че влагате усилие в развиване на икономическо и стратегическо мислене! Подкастът е само началото — леко открехната врата, през която трябва да минете и да извървите своя път.</p>
+  <div class="sign">— Георги Стоев</div>
+</section>
+
+<div class="rule"></div>
+
+<main>
+
+  <section class="tech" id="tech-1" data-n="1">
+    <span class="tech-num" aria-hidden="true">1</span>
+    <div class="tech-body">
+      <h2>Времето може да бъде или <span class="hl">инвестирано умно</span>, или похарчено</h2>
+      <p>Ако измервате успеха на действията си в матрицата „провал или успех, нула или единица“, най-вероятно това е похарчено време. Ако измервате успеха чрез напредък към дадена цел, това най-вероятно е инвестирано време.</p>
+    </div>
+  </section>
+
+  <section class="tech" id="tech-2" data-n="2">
+    <span class="tech-num" aria-hidden="true">2</span>
+    <div class="tech-body">
+      <h2>Времето е <span class="hl">най-силната променлива</span> във формулата на растежа</h2>
+      <p>Сложната лихва ни учи, че прогресът не е линеен. Той може да изглежда бавен в началото, но с времето се ускорява и търпението се отплаща.</p>
+      <div class="diagram">
+        <svg viewBox="0 0 320 150" xmlns="http://www.w3.org/2000/svg">
+          <line x1="20" y1="130" x2="300" y2="130" stroke="#B6A2E8" stroke-width="1.5"/>
+          <line x1="20" y1="130" x2="20" y2="14" stroke="#B6A2E8" stroke-width="1.5"/>
+          <path d="M20,128 C 90,126 150,118 200,90 C 240,66 260,40 296,18" fill="none" stroke="#2A0A4C" stroke-width="3.5" stroke-linecap="round"/>
+          <text x="300" y="146" font-family="Manrope" font-size="11" fill="#6E6280" text-anchor="end">Време</text>
+          <text x="14" y="12" font-family="Manrope" font-size="11" fill="#6E6280" text-anchor="start">Резултат</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote-band">
+    <div class="quote-inner">
+      <blockquote>Нашата психологическа имунна система може да оправдае смелост в излишък по-лесно, отколкото излишък на страх.</blockquote>
+      <cite>Даниъл Гилбърт</cite>
+    </div>
+  </section>
+
+  <section class="tech" id="tech-3" data-n="3">
+    <span class="tech-num" aria-hidden="true">3</span>
+    <div class="tech-body">
+      <h2>Гледайте всяка възможност от <span class="hl">перспективата ви след пет години</span></h2>
+      <p>В дългосрочен план сме склонни да съжаляваме повече за пропуснати възможности, отколкото за действителни провали в резултат на активни решения.</p>
+    </div>
+  </section>
+
+  <section class="tech" id="tech-4" data-n="4">
+    <span class="tech-num" aria-hidden="true">4</span>
+    <div class="tech-body">
+      <h2>Преди да решите, че някой ви мисли злото, уверете се, че не ви вреди от <span class="hl">чиста глупост</span></h2>
+      <p>Глупостта е хаотична и ирационална — битка, която не може да спечелите. Спестете енергия и емоции за по-важни задачи.</p>
+    </div>
+  </section>
+
+  <section class="tech" id="tech-5" data-n="5">
+    <span class="tech-num" aria-hidden="true">5</span>
+    <div class="tech-body">
+      <h2>Научете се да оценявате <span class="hl">отрицателната обратна връзка</span></h2>
+      <p>Тя ви показва пътя към успеха, ако проявявате автентичен интерес какво вълнува другите хора, какви проблеми срещат и как може да бъдат решени.</p>
+    </div>
+  </section>
+
+  <section class="tech" id="tech-6" data-n="6">
+    <span class="tech-num" aria-hidden="true">6</span>
+    <div class="tech-body">
+      <h2>Човек може да се научи да не се <span class="hl">ужасява от провала</span></h2>
+      <p>Приемете, че 3/4 от идеите ви няма да се реализират, както сте ги планирали. Редовно си припомняйте, че за провалите вероятно няма да си спомняте след време.</p>
+    </div>
+  </section>
+
+  <section class="tech" id="tech-7" data-n="7">
+    <span class="tech-num" aria-hidden="true">7</span>
+    <div class="tech-body">
+      <h2><span class="hl">Оптимизъм</span> за целите, <span class="hl">скептичност</span> за начина на постигане</h2>
+      <p>Бъдете непреклонни за визията си и за дългосрочната си голяма цел, но в същото време бъдете гъвкави относно детайлите за нейното постигане. Бъдете упорити, но не инат.</p>
+    </div>
+  </section>
+
+  <section class="tech" id="tech-8" data-n="8">
+    <span class="tech-num" aria-hidden="true">8</span>
+    <div class="tech-body">
+      <h2>Не оставайте дълго в психологическия домейн на <span class="hl">загубите</span></h2>
+      <p>Там ставаме хазартни и поемаме излишни неразумни рискове. Затворете страницата, третирайте загубите като разход, като цена за научен урок, и продължете напред.</p>
+    </div>
+  </section>
+
+  <section class="tech" id="tech-9" data-n="9">
+    <span class="tech-num" aria-hidden="true">9</span>
+    <div class="tech-body">
+      <h2>Загубите на пари, ресурси и време са проблем на <span class="hl">бъдещето</span>, не на миналото</h2>
+      <p>Опитайте се да мислите как да намалите потенциални бъдещи загуби, а не да възстановявате „потънали“ разходи.</p>
+      <div class="diagram">
+        <svg viewBox="0 0 320 150" xmlns="http://www.w3.org/2000/svg">
+          <line x1="20" y1="20" x2="20" y2="130" stroke="#B6A2E8" stroke-width="1.5"/>
+          <line x1="20" y1="130" x2="300" y2="130" stroke="#B6A2E8" stroke-width="1.5"/>
+          <path d="M20,26 C 80,30 130,55 172,92 C 212,127 255,135 296,137" fill="none" stroke="#2A0A4C" stroke-width="3.5" stroke-linecap="round"/>
+          <text x="300" y="146" font-family="Manrope" font-size="11" fill="#6E6280" text-anchor="end">Време</text>
+          <text x="14" y="12" font-family="Manrope" font-size="11" fill="#6E6280" text-anchor="start">Загуби</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote-band">
+    <div class="quote-inner">
+      <blockquote>Когато се отказвате от нещо навреме — в обективно правилния момент — обикновено ще ви се струва, че сте се отказали твърде рано.</blockquote>
+      <cite>Ани Дюк</cite>
+    </div>
+  </section>
+
+  <section class="tech" id="tech-10" data-n="10">
+    <span class="tech-num" aria-hidden="true">10</span>
+    <div class="tech-body">
+      <h2>Представете си това, което <span class="hl">не искате</span> да се случи</h2>
+      <p>Структурирайте решенията си около избягването на тези негативни сценарии. Не се вторачвайте върху положителни образи на бъдещето си — това е крехка стратегия, наситена с много повече несигурност и фактори извън нашия контрол.</p>
+    </div>
+  </section>
+
+  <section class="quote-band">
+    <div class="quote-inner">
+      <blockquote>Знаем много повече какво е грешно, отколкото какво е правилно.</blockquote>
+      <cite>Насим Талеб</cite>
+    </div>
+  </section>
+
+  <section class="tech" id="tech-11" data-n="11">
+    <span class="tech-num" aria-hidden="true">11</span>
+    <div class="tech-body">
+      <h2>Не задушавайте новите начинания в <span class="hl">свръхпланиране</span></h2>
+      <p>Избягвайте твърде конкретни очаквания за резултата. Колкото по-конкретни детайли си представяме, толкова по-разочаровани сме, когато реалността се разминава с тях.</p>
+    </div>
+  </section>
+
+  <section class="tech" id="tech-12" data-n="12">
+    <span class="tech-num" aria-hidden="true">12</span>
+    <div class="tech-body">
+      <h2>Бъдете готови за <span class="hl">редки екстремни събития</span> с голямо въздействие</h2>
+      <p>Дори ако изглеждат супер малко вероятни. Рисковете често следват разпределение на Парето — малък брой редки, но критично значими събития причиняват по-голямата част от щетите. Може да изхабим енергия в подготовка за дребни проблеми, без да сме подготвени за големите.</p>
+      <div class="diagram">
+        <svg viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg">
+          <text x="14" y="14" font-family="Manrope" font-size="11" fill="#6E6280">% от всички проблеми</text>
+          <text x="300" y="30" font-family="Manrope" font-size="11" fill="#6E6280" text-anchor="end">100%</text>
+          <line x1="20" y1="34" x2="20" y2="132" stroke="#B6A2E8" stroke-width="1.5"/>
+          <line x1="20" y1="132" x2="300" y2="132" stroke="#B6A2E8" stroke-width="1.5"/>
+          <path d="M20,130 C 55,58 95,26 145,20 C 195,15 245,14 296,13" fill="none" stroke="#2A0A4C" stroke-width="3.5" stroke-linecap="round"/>
+          <text x="160" y="152" font-family="Manrope" font-size="10.5" fill="#6E6280" text-anchor="middle">Малко вероятни рискове ➜ Много вероятни рискове</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="tech" id="tech-13" data-n="13">
+    <span class="tech-num" aria-hidden="true">13</span>
+    <div class="tech-body">
+      <h2>Ресурсите са ограничени, <span class="hl">човешките желания</span> не са</h2>
+      <p>Нашата стратегия трябва да ни поставя по-често в състезание за разкриване на желания и по-рядко в състезание за използване на ресурси.</p>
+    </div>
+  </section>
+
+  <section class="tech" id="tech-14" data-n="14">
+    <span class="tech-num" aria-hidden="true">14</span>
+    <div class="tech-body">
+      <h2>Радвайте се на <span class="hl">малките победи</span></h2>
+      <p>Не оставайте блокирани в депресивни сравнения на текущото състояние на нещата с „идеалното състояние“. Измервайте промяната, която носи едно решение, а не разстоянието до утопичното бъдеще.</p>
+    </div>
+  </section>
+
+  <section class="tech" id="tech-15" data-n="15">
+    <span class="tech-num" aria-hidden="true">15</span>
+    <div class="tech-body">
+      <h2>Бъдете <span class="hl">смирени</span> относно успехите си</h2>
+      <p>Не подценявайте ролята на късмета и не надценявайте собствените си умения. Търсете ex ante рационалност, а не ex post потвърждение колко сте умни.</p>
+    </div>
+  </section>
+
+</main>
+
+<div class="rule"></div>
+
+<section class="listen" id="listen">
+  <h3>Слушайте Ex Ante</h3>
+  <p>Икономическо мислене с Георги Стоев.</p>
+  <div class="platforms">
+    <a class="platform" href="https://open.spotify.com/show/1f1cyW0xzxBpvdcARNL4EK" target="_blank" rel="noopener">Spotify</a>
+    <a class="platform" href="https://podcasts.apple.com/bg/podcast/ex-ante-%D0%B8%D0%BA%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D0%BA%D0%B0-%D1%81-%D0%B3%D0%B5%D0%BE%D1%80%D0%B3%D0%B8-%D1%81%D1%82%D0%BE%D0%B5%D0%B2/id1649317959" target="_blank" rel="noopener">Apple Podcasts</a>
+    <a class="platform" href="https://soundcloud.com/bnrpodcasts/sets/ex-ante" target="_blank" rel="noopener">SoundCloud</a>
+    <a class="platform" href="https://binar.bg/binar/podcast/83/ex-ante-sezon-04-bnr-podkast" target="_blank" rel="noopener">Binar</a>
+    <a class="platform" href="https://linkedin.com/in/stoeff" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="platform" href="https://instagram.com/ex_ante_economic_thinking" target="_blank" rel="noopener">Instagram</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-panel yellow">
+    <div class="footer-mark">EX</div>
+    <div class="footer-label">Икономическо мислене</div>
+  </div>
+  <div class="footer-panel purple">
+    <div class="footer-mark">ANTE</div>
+    <div class="footer-label">с Георги Стоев</div>
+  </div>
+</footer>
+
+<div class="credits">Ex Ante — подкаст за икономическо и стратегическо мислене</div>
+
+<script>
+  // build side rail
+  const rail = document.getElementById('rail');
+  const sections = Array.from(document.querySelectorAll('.tech'));
+  sections.forEach(sec => {
+    const n = sec.dataset.n;
+    const btn = document.createElement('button');
+    btn.dataset.n = n;
+    btn.setAttribute('aria-label', 'Техника ' + n);
+    btn.addEventListener('click', () => sec.scrollIntoView({behavior:'smooth', block:'center'}));
+    rail.appendChild(btn);
+  });
+  const railButtons = Array.from(rail.querySelectorAll('button'));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('is-visible');
+        const n = e.target.dataset.n;
+        railButtons.forEach(b => b.classList.toggle('active', b.dataset.n === n));
+      }
+    });
+  }, { threshold: 0.45 });
+  sections.forEach(s => io.observe(s));
+
+  const bar = document.getElementById('progressBar');
+  const onScroll = () => {
+    const h = document.documentElement;
+    const scrolled = h.scrollTop;
+    const max = h.scrollHeight - h.clientHeight;
+    bar.style.width = (max > 0 ? (scrolled / max) * 100 : 0) + '%';
+  };
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
+
+</body>
+</html>
