@@ -69,7 +69,7 @@
       "priceRange": "",
       "location": "В града",
       "link": "",
-      "phone": "+359 3051 2102",
+      "phone": "",
       "mapLink": "https://www.google.com/maps/search/?api=1&query=%D1%85%D0%BE%D1%82%D0%B5%D0%BB%20%D0%9C%D0%B5%D1%82%D0%B5%D0%BE%D1%80%20%D0%A7%D0%B5%D0%BF%D0%B5%D0%BB%D0%B0%D1%80%D0%B5",
       "notes": "Ул. „Васил Дечев“ 53."
     },
@@ -110,7 +110,7 @@
       "link": "",
       "phone": "",
       "mapLink": "https://www.google.com/maps/search/?api=1&query=%D1%83%D0%BB.%20%D0%92%D0%B0%D1%81%D0%B8%D0%BB%20%D0%94%D0%B5%D1%87%D0%B5%D0%B2%2029%2C%20%D0%A7%D0%B5%D0%BF%D0%B5%D0%BB%D0%B0%D1%80%D0%B5",
-      "notes": "Ул. „Васил Дечев“ 29. Работи само сутрин; затворено в неделя."
+      "notes": "Ул. „Васил Дечев“ 29. Затворено в неделя."
     }
   ]
 }
